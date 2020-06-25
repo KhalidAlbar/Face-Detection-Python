@@ -1,0 +1,32 @@
+import numpy as np
+import cv2 as cv
+
+
+
+cap= cv.VideoCapture(0)    #using the computer camera
+
+cap.set(3,640)       # window width
+cap.set(4,480)       # window hieght
+
+
+
+while True:
+
+    ss,img=cap.read()              #reading the an image from the webcam and saving it on img
+
+    path= r"C:\Users\STAR\Desktop\face.jpg"
+    hasc= r"C:\Users\STAR\Desktop\haarcascade_frontalface_default.xml"
+    faceCascade= cv.CascadeClassifier(hasc)         # the face dedction model
+
+
+    imgGray = cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+
+    faces =  faceCascade.detectMultiScale(imgGray, 1.1, 4)
+
+    for (x, y, w, h) in faces:
+        cv.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 2)
+
+    cv.imshow("photo",img)
+
+    if cv.waitKey(1) & 0xFF == ord('q'):  #exit the program if the user press 'q'
+        break
